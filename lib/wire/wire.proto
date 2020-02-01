@@ -61,6 +61,7 @@ enum MessageType {
   ConnectivityEvent          = 46;
   PhoneStateEvent            = 47;
   RotationEvent              = 48;
+  NetworkConnectivityEvent   = 94;
   StoreOpenMessage           = 49;
   ScreenCaptureMessage       = 50;
   DeviceHeartbeatMessage     = 73;
@@ -393,6 +394,7 @@ message DevicePhoneMessage {
   optional string phoneNumber = 2;
   optional string iccid = 3;
   optional string network = 4;
+  optional string ipAddress = 6;
 }
 
 message DeviceIdentityMessage {
@@ -748,4 +750,9 @@ message PhoneStateEvent {
 message RotationEvent {
   required string serial = 1;
   required int32 rotation = 2;
+}
+
+message NetworkConnectivityEvent {
+  required string serial = 1;
+  required string ipAddress = 2;
 }

@@ -100,6 +100,10 @@ module.exports = function DeviceListCtrl(
     , selected: false
     }
   , {
+      name: 'ipAddress'
+    , selected: false
+    }
+  , {
       name: 'batteryHealth'
     , selected: false
     }

@@ -287,6 +287,12 @@ module.exports = function DeviceColumnService($filter, gettext, SettingsService,
         return device.phone ? device.phone.iccid : ''
       }
     })
+  , ipAddress: TextCell({
+      title: gettext('IP Address')
+    , value: function(device) {
+        return device.phone ? device.phone.ipAddress : ''
+      }
+    })
   , batteryHealth: TextCell({
       title: gettext('Battery Health')
     , value: function(device) {
