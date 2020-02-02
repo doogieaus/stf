@@ -229,7 +229,7 @@ module.exports = function DeviceColumnService($filter, gettext, SettingsService,
         return device.manufacturer || ''
       }
     })
-  , marketName: TextCell({
+  , marketName: DeviceMarketNameCell({
     title: gettext('Market name')
     , value: function(device) {
       return device.marketName || ''
@@ -736,6 +736,42 @@ function DeviceNoteCell(options) {
       span.appendChild(document.createTextNode(''))
 
       i.className = 'device-note-edit fa fa-pencil pointer'
+
+      td.appendChild(span)
+      td.appendChild(i)
+
+      return td
+    }
+  , update: function(td, item) {
+      var span = td.firstChild
+      var t = span.firstChild
+
+      t.nodeValue = options.value(item)
+      return td
+    }
+  , compare: function(a, b) {
+      return compareIgnoreCase(options.value(a), options.value(b))
+    }
+  , filter: function(item, filter) {
+      return filterIgnoreCase(options.value(item), filter.query)
+    }
+  })
+}
+
+function DeviceMarketNameCell(options) {
+  return _.defaults(options, {
+    title: options.title
+  , defaultOrder: 'asc'
+  , build: function() {
+      var td = document.createElement('td')
+      var span = document.createElement('span')
+      var i = document.createElement('i')
+
+      td.className = 'device-market-name'
+      span.className = 'xeditable-wrapper'
+      span.appendChild(document.createTextNode(''))
+
+      i.className = 'device-market-name-edit fa fa-pencil pointer'
 
       td.appendChild(span)
       td.appendChild(i)

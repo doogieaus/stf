@@ -32,6 +32,14 @@ module.exports = function DeviceListCtrl(
     , selected: true
     }
   , {
+      name: 'manufacturer'
+    , selected: false
+    }
+  , {
+      name: 'marketName'
+    , selected: false
+    }
+  , {
       name: 'serial'
     , selected: false
     }
@@ -53,14 +61,6 @@ module.exports = function DeviceListCtrl(
     }
   , {
       name: 'display'
-    , selected: false
-    }
-  , {
-      name: 'manufacturer'
-    , selected: false
-    }
-  , {
-      name: 'marketName'
     , selected: false
     }
   , {

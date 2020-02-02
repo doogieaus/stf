@@ -117,7 +117,7 @@ module.exports = function DeviceListDetailsDirective(
         }
       }
 
-      function destroyXeditableNote(id) {
+      function destroyXeditable(id) {
         var tr = tbody.children[id]
         for (var i = 0; i < tr.cells.length; i++) {
           var col = tr.cells[i]
@@ -140,17 +140,54 @@ module.exports = function DeviceListDetailsDirective(
 
       scope.updateNote = function(id, serial, note) {
         DeviceService.updateNote(serial, note)
-        destroyXeditableNote(id)
+        destroyXeditable(id)
       }
 
       scope.onDeviceNoteCancel = function(id) {
-        destroyXeditableNote(id)
+        destroyXeditable(id)
+      }
+
+      function checkDeviceMarketName(e) {
+        if (e.target.classList.contains('device-market-name-edit')) {
+
+          var i = e.target
+          var id = i.parentNode.parentNode.id
+          var device = mapping[id]
+          var xeditableWrapper = i.parentNode.firstChild
+          var xeditableSpan = document.createElement('span')
+          var childScope = scope.$new()
+
+          // Ref: http://vitalets.github.io/angular-xeditable/#text-btn
+          xeditableSpan.setAttribute('editable-text', 'device.marketName')
+          xeditableSpan.setAttribute('onbeforesave', 'updateMarketName(id, device.serial, $data)')
+          xeditableSpan.setAttribute('onCancel', 'onDeviceMarketNameCancel(id)')
+
+          childScope.id = id
+          childScope.device = device
+          childScopes[id] = childScope
+
+          $compile(xeditableSpan)(childScope)
+          xeditableWrapper.appendChild(xeditableSpan)
+
+          // Trigger click to open the form.
+          angular.element(xeditableSpan).triggerHandler('click')
+        }
+      }
+
+      scope.updateMarketName = function(id, serial, marketName) {
+        DeviceService.updateMarketName(serial, marketName)
+        destroyXeditable(id)
+      }
+
+      scope.onDeviceMarketNameCancel = function(id) {
+        destroyXeditable(id)
       }
 
       element.on('click', function(e) {
         checkDeviceStatus(e)
         checkDeviceSmallImage(e)
         checkDeviceNote(e)
+        checkDeviceMarketName(e)
       })
 
       // Import column definitions
